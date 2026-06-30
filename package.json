@@ -1,0 +1,19 @@
+{
+  "name": "ukpbj_ar",
+  "version": "1.0.0",
+  "description": "Tailwind CSS v4 setup with PostCSS for CodeIgniter 4",
+  "main": "index.js",
+  "scripts": {
+    "build": "postcss resources/css/app.css -o public/css/app.css",
+    "watch": "postcss resources/css/app.css -o public/css/app.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "postcss": "^8.5.16",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.3.2"
+  }
+}
