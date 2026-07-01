@@ -28,7 +28,20 @@ class Auth extends BaseController
                 // Call Data Pegawai API
                 try {
                     $url = 'https://apps.sinjaikab.go.id/api/pegawai/data_pegawai/?nip=' . (int)$nip;
-                    $json = @file_get_contents($url);
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+                    $json = curl_exec($ch);
+                    
+                    if (curl_errno($ch)) {
+                        $error_msg = curl_error($ch);
+                        log_message('error', 'CURL error for NIP ' . $nip . ': ' . $error_msg);
+                    }
+                    curl_close($ch);
+
                     $data_pegawai = json_decode($json);
                 } catch (\Exception $e) {
                     log_message('error', 'API exception for NIP ' . $nip . ': ' . $e->getMessage());
